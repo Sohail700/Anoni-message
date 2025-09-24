@@ -4,7 +4,15 @@ import UserModel from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
-  await dbConnect();
+  try {
+    await dbConnect();
+  } catch (err) {
+    console.error("Database connection failed:", err);
+    return Response.json(
+      { success: false, message: "Database error" },
+      { status: 500 }
+    );
+  }
 
   try {
     //email
