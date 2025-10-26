@@ -4,6 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
 import { User } from "next-auth";
 import mongoose from "mongoose";
+import { log } from "console";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -44,5 +45,15 @@ export async function GET(request: Request) {
       },
       { status: 403 }
     );
-  } catch (error) {}
+  } catch (error) {
+    console.log("get-message error", error);
+
+    return Response.json(
+      {
+        success: false,
+        message: "get-message error",
+      },
+      { status: 500 }
+    );
+  }
 }
